@@ -1,0 +1,125 @@
+[gd_scene load_steps=11 format=3 uid="uid://df5pyp2dwr24t"]
+
+[ext_resource type="Script" path="res://scripts/menu.gd" id="1_pxypp"]
+[ext_resource type="Texture2D" uid="uid://b0toijwbr2phg" path="res://assets/sprites/a065e0336c37d1fc.png" id="2_gf841"]
+[ext_resource type="AudioStream" uid="uid://thp8gfg4ykls" path="res://assets/sound/Unnamed (3).mp3" id="3_100v1"]
+
+[sub_resource type="Animation" id="Animation_iuwjd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_pdnxn"]
+resource_name = "to_menu"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1150, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_fstbs"]
+resource_name = "to_settings"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(1150, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5txm1"]
+_data = {
+"RESET": SubResource("Animation_iuwjd"),
+"to_menu": SubResource("Animation_pdnxn"),
+"to_settings": SubResource("Animation_fstbs")
+}
+
+[sub_resource type="Theme" id="Theme_i1fqv"]
+default_font_size = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_0d2hq"]
+font_size = 64
+
+[sub_resource type="LabelSettings" id="LabelSettings_va2wc"]
+font_size = 64
+
+[node name="Menu" type="Node2D"]
+script = ExtResource("1_pxypp")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(576, 324)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera2D"]
+libraries = {
+"": SubResource("AnimationLibrary_5txm1")
+}
+
+[node name="Game" type="TextureButton" parent="."]
+offset_left = 542.0
+offset_top = 242.0
+offset_right = 606.0
+offset_bottom = 306.0
+texture_normal = ExtResource("2_gf841")
+
+[node name="Settings" type="TextureButton" parent="."]
+offset_left = 538.0
+offset_top = 325.0
+offset_right = 602.0
+offset_bottom = 389.0
+texture_normal = ExtResource("2_gf841")
+
+[node name="BackToMenu" type="TextureButton" parent="."]
+offset_left = 1650.0
+offset_top = 247.0
+offset_right = 1714.0
+offset_bottom = 311.0
+texture_normal = ExtResource("2_gf841")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 1519.0
+offset_top = 151.0
+offset_right = 1813.0
+offset_bottom = 239.0
+theme = SubResource("Theme_i1fqv")
+text = "SETTINGS
+"
+label_settings = SubResource("LabelSettings_0d2hq")
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 387.0
+offset_top = 168.0
+offset_right = 768.0
+offset_bottom = 256.0
+text = "MAIN MENU"
+label_settings = SubResource("LabelSettings_va2wc")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_100v1")
+
+[connection signal="pressed" from="Game" to="." method="_on_game_pressed"]
+[connection signal="pressed" from="Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="BackToMenu" to="." method="_on_back_to_menu_pressed"]
